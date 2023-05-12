@@ -56,6 +56,15 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    // (1)
+    // AudioProcessorValueTreeState is used to coordinate the adjustable parameters to the knobs on the GUI and variables
+    // AudioProcessorValueTreeState{ Audio Processor to connect to is 'this', UndoManager is used to undo/redo actions not used, 
+                                   // Variable, Parameter Layout is a list of all parameters }
+    static juce::AudioProcessorValueTreeState::ParameterLayout 
+        createParameterLayout();
+    juce::AudioProcessorValueTreeState apvts{ *this, nullptr,
+        "Parameters", createParameterLayout()};
+
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleEQAudioProcessor)
